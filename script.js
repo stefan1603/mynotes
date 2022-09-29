@@ -1,4 +1,4 @@
-"use strict";
+/*"use strict";
 
 window.addEventListener(
   "load",
@@ -17,6 +17,24 @@ window.addEventListener(
       },
       false
     );
+  },
+  false
+);*/
+
+"use strict";
+window.addEventListener(
+  "load",
+  function () {
+    const button = document.getElementById("add");
+    button.addEventListener("click", function () {
+      let input = document.getElementById("text");
+      //let note = input.value;
+
+      let list = document.getElementById("list");
+      let item = document.createElement("li");
+      item.innerText = input.value;
+      list.appendChild(item);
+    });
   },
   false
 );
