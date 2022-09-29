@@ -28,7 +28,15 @@ function add() {
     item.innerText = input.value; //Neu erstelltes Listenelement besitzt eingegebenen Wert
     list.appendChild(item); //hier wird Angefügt
     input.value = "";
+    item.addEventListener("click", handleClickLIItem);
+    input.focus();
   } else {
     alert("Füge einen Text ein");
   }
+}
+
+//Löschen von Elementen
+function handleClickLIItem(event) {
+  const list = document.getElementById("list");
+  list.removeChild(event.target);
 }
