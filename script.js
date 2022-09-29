@@ -1,4 +1,16 @@
 "use strict";
+const notes = [
+  //"Note 1"
+  //"Note 2"
+  // ...
+];
+
+function buildItem(note) {
+  let item = document.createElement("li");
+  item.textContent = note;
+  item.addEventListener("click", handleClickLIItem);
+  return item;
+}
 
 //Warte bis DOM-Elemente geladen wurden
 //So ähnlich wie windows.eventListener "load" ????
@@ -25,14 +37,13 @@ function handleClick() {
 //Funktion zum Dranhängen der Eingabe
 function add() {
   let input = document.getElementById("text");
-  if (input.value) {
+  const note = input.value;
+  if (note) {
     let list = document.getElementById("list");
-    let item = document.createElement("li");
-
-    item.innerText = input.value; //Neu erstelltes Listenelement besitzt eingegebenen Wert
+    const item = buildItem(note);
     list.appendChild(item); //hier wird Angefügt
+    notes.push(note);
     input.value = "";
-    item.addEventListener("click", handleClickLIItem);
     input.focus();
   } else {
     alert("Füge einen Text ein");
