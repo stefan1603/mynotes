@@ -1,10 +1,14 @@
 "use strict";
 
-const button = document.getElementById("add");
-button.addEventListener("click", handleClick);
+//Warte bis DOM-Elemente geladen wurden
+//So ähnlich wie windows.eventListener "load" ????
+document.addEventListener("DOMContentLoaded", function () {
+  const button = document.getElementById("add");
+  button.addEventListener("click", handleClick);
 
-let input = document.getElementById("text");
-input.addEventListener("keydown", handleKeyDown);
+  const input = document.getElementById("text");
+  input.addEventListener("keydown", handleKeyDown);
+});
 
 //Funktion bei "Enter"-Klick
 function handleKeyDown(event) {
