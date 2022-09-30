@@ -3,6 +3,9 @@ const notes = [
   //"Note 1"
   //"Note 2"
   // ...
+  // { id: "676c9ba771", title: "Title 1", text: "ToDo 1" },
+  // { id: "dc19d1538f", title: "Title 2", text: "ToDo 2" },
+  // { id: "fd8c75b4fb", title: "Title 3", text: "ToDo 2" },
 ];
 
 function buildItem(note) {
@@ -17,17 +20,7 @@ function buildItem(note) {
 document.addEventListener("DOMContentLoaded", function () {
   const button = document.getElementById("add");
   button.addEventListener("click", handleClick);
-
-  const input = document.getElementById("text");
-  input.addEventListener("keydown", handleKeyDown);
 });
-
-//Funktion bei "Enter"-Klick
-function handleKeyDown(event) {
-  if (event.key === "Enter") {
-    add();
-  }
-}
 
 //Normale Klick-Funktion
 function handleClick() {
