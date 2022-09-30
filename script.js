@@ -10,8 +10,31 @@ const notes = [
 
 function buildItem(note) {
   let item = document.createElement("li");
-  item.textContent = note;
-  item.addEventListener("click", handleClickLIItem);
+
+  item.id = note.id;
+  /* The id property of the Element interface
+   represents the element's identifier, reflecting the id global attribute. 
+*/
+
+  //Baue grundaufbau von einem Eintrag
+  const article = document.createElement("article");
+  //article ist der "ganze Eintrag"
+  const title = document.createElement("header");
+  title.textContent = note.title;
+  const text = document.createElement("p");
+  text.textContent = note.text;
+
+  const controls = document.createElement("div");
+  const button = document.createElement("button");
+  button.textContent = "Delete";
+  button.addEventListener("click", handleClickDelete(note.id));
+  controls.appendChild(button);
+
+  article.appendChild(title);
+  article.appendChild(text);
+  article.appendChild(controls);
+  item.appendChild(article);
+
   return item;
 }
 
@@ -27,24 +50,45 @@ function handleClick() {
   add();
 }
 
+//Löschen von Elementen
+function handleClickDelete(id) {
+  return function () {
+    const item = document.getElementById(id);
+    const list = document.getElementById("list");
+    list.removeChild(item);
+
+    //????
+    const pos = notes.findIndex((note) => note.id === id);
+    notes.splice(pos, 1);
+  };
+}
+
 //Funktion zum Dranhängen der Eingabe
 function add() {
-  let input = document.getElementById("text");
-  const note = input.value;
-  if (note) {
-    let list = document.getElementById("list");
+  const title = document.getElementById("title");
+  const text = document.getElementById("text");
+
+  if (title.value || text.value) {
+    //Wenn es einen Eintrag gegeben hat, füge etwas hinzu
+    const list = document.getElementById("list");
+    const note = createNote(title.value, text.value);
     const item = buildItem(note);
-    list.appendChild(item); //hier wird Angefügt
+    list.appendChild(item);
     notes.push(note);
-    input.value = "";
-    input.focus();
-  } else {
-    alert("Füge einen Text ein");
+    title.value = ""; //leere Eintrag
+    text.value = ""; //leere Eintrag
   }
 }
 
-//Löschen von Elementen
-function handleClickLIItem(event) {
-  const list = document.getElementById("list");
-  list.removeChild(event.target);
+//Generiert den Eintrag
+function createNote(title, text) {
+  const id = generateId(title, text);
+  return { id, title, text };
+}
+
+//Generiert eine Einzigartige ID für jeden EIntrag
+function generateId(title, text, length = 10) {
+  return CryptoJS.SHA256(title + text + new Date())
+    .toString()
+    .substring(0, length);
 }
