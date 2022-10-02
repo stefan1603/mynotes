@@ -30,9 +30,13 @@ function buildItem(note) {
   const controls = document.createElement("div");
   controls.classList.add("note__controls");
   const button = document.createElement("button");
-  button.textContent = "Delete";
+
   button.classList.add("note__controls__delete");
   button.addEventListener("click", handleClickDelete(note.id));
+  //icon wird erstellt als Button - Trash
+  const icon = document.createElement("i");
+  icon.classList.add("fas", "fa-trash");
+  button.appendChild(icon);
   controls.appendChild(button);
 
   article.appendChild(title);
