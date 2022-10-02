@@ -1,5 +1,5 @@
 "use strict";
-const notes = [
+let notes = [
   //"Note 1"
   //"Note 2"
   // ...
@@ -41,13 +41,13 @@ function buildItem(note) {
 //Warte bis DOM-Elemente geladen wurden
 //So ähnlich wie windows.eventListener "load" ????
 document.addEventListener("DOMContentLoaded", function () {
-  const button = document.getElementById("add");
-  button.addEventListener("click", handleClick);
+  init();
 });
 
 //Normale Klick-Funktion
 function handleClick() {
   add();
+  save();
 }
 
 //Löschen von Elementen
@@ -91,4 +91,36 @@ function generateId(title, text, length = 10) {
   return CryptoJS.SHA256(title + text + new Date())
     .toString()
     .substring(0, length);
+}
+
+function init() {
+  registerEventHandlers();
+  load();
+  draw();
+}
+
+function registerEventHandlers() {
+  //bei Klick soll Eventhandler ausgeführt werden
+  const button = document.getElementById("add");
+  button.addEventListener("click", handleClick);
+}
+
+function load() {
+  //lade daten VON LocalStorage
+  notes = JSON.parse(localStorage.getItem("notes")) || [];
+  //aus JSON-Daten werden JS-Objekte .. damit kann man arbeiten
+}
+
+function save() {
+  //speichere eingetragene Notes in local storage
+
+  localStorage.setItem("notes", JSON.stringify(notes));
+}
+
+function draw() {
+  //Zeichne mir die Notizen welche da sind
+  const list = document.getElementById("list");
+  //????
+  while (list.firstChild) list.removeChild(list.firstChild);
+  notes.forEach((note) => list.appendChild(buildItem(note)));
 }
