@@ -97,12 +97,28 @@ function init() {
   registerEventHandlers();
   load();
   draw();
+  registerServiceWorker();
 }
 
 function registerEventHandlers() {
   //bei Klick soll Eventhandler ausgeführt werden
   const button = document.getElementById("add");
   button.addEventListener("click", handleClick);
+}
+
+function registerServiceWorker() {
+  //implementier service-worker
+  //????
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker
+      .register("/notes/sw.js", { scope: "/notes/ " })
+      .then((registration) =>
+        console.log("Service Worker registered!", registration)
+      )
+      .catch((error) =>
+        console.log("Service Worker registration failed!", error)
+      );
+  }
 }
 
 function load() {
