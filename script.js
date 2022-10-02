@@ -15,18 +15,23 @@ function buildItem(note) {
   /* The id property of the Element interface
    represents the element's identifier, reflecting the id global attribute. 
 */
+  item.classList.add("note");
 
   //Baue grundaufbau von einem Eintrag
   const article = document.createElement("article");
   //article ist der "ganze Eintrag"
   const title = document.createElement("header");
   title.textContent = note.title;
+  title.classList.add("note__title");
   const text = document.createElement("p");
   text.textContent = note.text;
+  text.classList.add("note__text");
 
   const controls = document.createElement("div");
+  controls.classList.add("note__controls");
   const button = document.createElement("button");
   button.textContent = "Delete";
+  button.classList.add("note__controls__delete");
   button.addEventListener("click", handleClickDelete(note.id));
   controls.appendChild(button);
 
