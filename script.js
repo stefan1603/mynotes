@@ -63,6 +63,24 @@ function handleClickDelete(id) {
   };
 }
 
+function handleRegistration(registration) {
+  registration.addEventListener("updatefound", function () {
+    if (registration.installing) {
+      const worker = registration.installing;
+      worker.addEventListener("statechange", function () {
+        if (worker.state === "installed") {
+          handleUpdate(worker);
+        }
+      });
+    } else if (registration.waiting) {
+      const worker = registration.waiting;
+      if (worker.state === "installed") {
+        handleUpdate(worker);
+      }
+    }
+  });
+}
+
 //Funktion zum Dranhängen der Eingabe
 function add() {
   const title = document.getElementById("title");
@@ -107,14 +125,16 @@ function registerEventHandlers() {
 }
 
 function registerServiceWorker() {
-  //implementier service-worker
-  //????
   if ("serviceWorker" in navigator) {
+    let refreshing;
+    navigator.serviceWorker.addEventListener("controllerchange", function () {
+      if (refreshing) return;
+      window.location.reload();
+      refreshing = true;
+    });
     navigator.serviceWorker
       .register("/notes/sw.js", { scope: "/notes/ " })
-      .then((registration) =>
-        console.log("Service Worker registered!", registration)
-      )
+      .then((registration) => handleRegistration(registration))
       .catch((error) =>
         console.log("Service Worker registration failed!", error)
       );
