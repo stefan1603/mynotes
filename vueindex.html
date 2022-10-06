@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VUE To Do</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+      integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="vuestyle.css" />
+  </head>
+  <body>
+    <div id="app">
+      {{ text }}
+      <br />
+      <input
+        v-model="newTitle"
+        id="title"
+        class="input__title"
+        type="text"
+        name="title"
+        placeholder="Title "
+        spellcheck="false"
+      /><br /><textarea
+        v-model="newInput"
+        id="text"
+        class="input__text"
+        type="text"
+        name="text"
+        placeholder="Enter note ..."
+        spellcheck="false"
+        rows="5"
+        cols="17"
+      ></textarea>
+
+      <button @click="handleClick">
+        <i class="fas fa-plus"></i>
+      </button>
+      <ul>
+        <li v-for="item in notes">
+          {{ item.title }}
+          <br />
+          {{item.input}}
+
+          <button @click="handleDelete(item)">
+            <i class="fas fa-trash"></i>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </body>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"
+    integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
+  <script src="vuescript.js"></script>
+</html>

@@ -11,7 +11,7 @@ let notes = [
 function buildItem(note) {
   let item = document.createElement("li");
 
-  item.id = note.id;
+  item.id = note.id; //Note hat id, weil es ein Objekt ist
   /* The id property of the Element interface
    represents the element's identifier, reflecting the id global attribute. 
 */
@@ -49,6 +49,10 @@ function buildItem(note) {
 
 //Warte bis DOM-Elemente geladen wurden
 //So ähnlich wie windows.eventListener "load" ????
+//          domloaded vs windows.load
+//The DOMContentLoaded event is fired when the document has been
+//completely loaded and parsed, without waiting for stylesheets, images, and subframes to finish
+//loading (the load event can be used to detect a fully-loaded page)
 document.addEventListener("DOMContentLoaded", function () {
   init();
 });
@@ -59,16 +63,17 @@ function handleClick() {
   save();
 }
 
-//Löschen von Elementen
+//Löschen von Elementen ... UND GIBT eine Funktion zurück
 function handleClickDelete(id) {
   return function () {
     const item = document.getElementById(id);
     const list = document.getElementById("list");
     list.removeChild(item);
 
-    //????
-    const pos = notes.findIndex((note) => note.id === id);
-    notes.splice(pos, 1);
+    //Arrow-Funktion ... jeder Eintrag im Array (bestehend aus Objekte)
+    //hat seine "eigene Funktion"
+    const pos = notes.findIndex((note) => note.id === id); //es wird durchgegangen welcher Eintrag die geleiche id hat
+    notes.splice(pos, 1); //Eintrag von pos wird gelöscht
   };
 }
 
@@ -127,6 +132,7 @@ function createNote(title, text) {
 
 //Generiert eine Einzigartige ID für jeden EIntrag
 function generateId(title, text, length = 10) {
+  //length = 10 ist der Default-Wert
   return CryptoJS.SHA256(title + text + new Date())
     .toString()
     .substring(0, length);
